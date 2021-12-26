@@ -37,22 +37,30 @@ class ApiAuthController extends Controller
                     
             $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-           
+            // 'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'referrer_code' => 'required',
+            // 'referrer_code' => 'required',
             'password' => 'required|string|min:8',
             ]);
 
+            
 
-            $regCode = "PGN" .rand(11100,999999);
+            // if ($validatedData->fails()) {
+    
+            //     //pass validator errors as errors object for ajax response
+            
+            //           return 123;
+            //         }
+
+
+            $regCode = "LGT" .rand(11100,99999);
                 
             $user = User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
-                'username' => $validatedData['username'],
+                // 'username' => $validatedData['username'],
                 'usercode' => $regCode,
-                'sponsors_id' => $validatedData['referrer_code'],
+                // 'sponsors_id' => $validatedData['referrer_code'],
                 'password' => Hash::make($validatedData['password']),
             ]);
 
@@ -60,35 +68,6 @@ class ApiAuthController extends Controller
             $user->update([
                 'otp' => rand(111111,999999)
             ]);
-
-
-        $sponsors_data = User::where('usercode', $validatedData['referrer_code'])->first();
-        
-        $weekNo = Carbon::now()->weekOfYear;
-        
-        $referral_bonus = DirectReferral::Create([
-            'referrer_id' => $sponsors_data->id??10001,
-            'referree_id' => $user->id,
-            'referrer_usercode' => $sponsors_data->usercode??'PGN22002', // usercode of your upline
-            'referree_usercode' => $regCode,
-            'weekInYear' => $weekNo,
-            
-        ]);
-
-
-
-
-        $notification = Notification::create([
-            'performed_by' => $sponsors_data->id??10001,
-            'title' => "New Signup",
-            'log' => 'Someone just signed up with your code'
-        ]);
-
-        $notification = Notification::create([
-            'performed_by' => $user->id,
-            'title' => "New Signup",
-            'log' => 'You just signed up welcome to Phoenixgn'
-        ]);
 
         $datax = [
             'name' => $user->name,
@@ -117,10 +96,10 @@ class ApiAuthController extends Controller
                     'token_type' => 'Bearer',
         ]);
 
-        } catch (\Throwable $th) {
+        } catch (\Throwable $e) {
             //throw $th;
 
-            return $th;
+            return response()->json(['error' => $e->getMessage()], 500);
         }
             
 

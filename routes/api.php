@@ -51,8 +51,5 @@ Route::get('/add_faq', [FAQController::class, 'add_faq'])->middleware('auth:sanc
 Route::get('/wallet_balance', [UserWalletController::class, 'wallet_balance'])->middleware('auth:sanctum');
 
 
-Route::post('/create_enumeration', [RTVRSEnumerationController::class, 'create_enumeration']);
-
-
 
 

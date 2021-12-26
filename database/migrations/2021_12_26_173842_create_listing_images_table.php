@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIndirectReferralsTable extends Migration
+class CreateListingImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateIndirectReferralsTable extends Migration
      */
     public function up()
     {
-        Schema::create('indirect_referrals', function (Blueprint $table) {
+        Schema::create('listing_images', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->integer('week_no');
-            $table->integer('indirect_bonus');
+            $table->string('img_path');
+            $table->bigInteger('listing_id')->unsigned();
+            $table->foreign('listing_id')->references('id')->on('users');
             $table->string('status')->default('active');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('order')->unsigned();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateIndirectReferralsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('indirect_referrals');
+        Schema::dropIfExists('listing_images');
     }
 }

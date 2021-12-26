@@ -17,13 +17,11 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('username')->unique();
+            $table->string('username')->unique()->nullable();
             $table->string('otp')->nullable();
-            $table->string('avatar')->default('default.jpg');
+            $table->string('avatar')->default(config('app.url').'avatars/default.png');
             $table->string('usercode')->nullable()->unique();
-            $table->integer('package_id')->nullable();
-            $table->string('track_id')->nullable();
-            $table->string('status')->default('unverified');
+            $table->string('status')->default('active');
             $table->string('role')->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

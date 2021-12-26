@@ -4,24 +4,20 @@
 
 <p>
     Hi, {{ $data['name'] }} <br>
-    Congratulations. Welcome to Phoenixgn. <br>
+    Congratulations. Welcome to LegitCar. <br>
 
 </p>
 
 <p>
-    <u>Follow the steps below to get started</u>
+    You can now update your profile, and browse through our market place of verified vehicles.
 </p>
 
-<ol>
-    <li>Update your profile</li>
-    <li>Subscribe to a package</li>
-    <li>Share your affiliate link</li>
-</ol>
+
 
 {{-- @component('mail::button', ['url' => ''])
 Button Text
 @endcomponent --}}
 
-Thanks,<br>
+Warm Regards,<br>
 {{ config('app.name') }}
 @endcomponent
